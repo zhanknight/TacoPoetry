@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TacoMusings.API.Contexts;
+using TacoMusings.API.Models;
+using TacoMusings.API.Services.Interfaces;
 
 namespace TacoMusings.API.Controllers;
 
@@ -9,47 +11,62 @@ namespace TacoMusings.API.Controllers;
 public class AuthorsController : ControllerBase
 {
     private readonly ILogger<AuthorsController> _logger;
-    private readonly TacoMusingsContext _context;
+    private readonly IAuthorService _service;
 
-    public AuthorsController(ILogger<AuthorsController> logger, TacoMusingsContext context)
+    public AuthorsController(ILogger<AuthorsController> logger, IAuthorService service)
     {
         _logger = logger;
-        _context = context;
+        _service = service;
     }
 
-
     [HttpGet]
-    public async Task<ActionResult<string[]>> GetAuthors()
+    public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
     {
-        var test = await _context.Author.FirstOrDefaultAsync();
-        return new string[] { test.AuthorName, test.AuthorBio };
+        var result = await _service.GetAuthors();
+        return Ok(result);
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<string>> GetAuthor(int id)
+    public async Task<ActionResult<Author>> GetAuthor(int id)
     {
-        return "Author One";
+        var result = await _service.GetAuthorById(id);
+
+        if (result == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
     }
 
     [HttpPost]
-    public async Task<ActionResult> CreateAuthor([FromBody] string author)
+    public async Task<ActionResult> CreateAuthor([FromBody] Author author)
     {
-        _logger.LogInformation("Creating new author");
+        _logger.LogInformation("Creating new author", author);
 
-        return CreatedAtRoute("GetAuthor", new { id = 1 }, "Author One");
+        var createdAuthor = await _service.CreateAuthor(author);
+        await Console.Out.WriteLineAsync(createdAuthor.AuthorId.ToString());
+
+        return CreatedAtAction(nameof(GetAuthor), new { id = createdAuthor.AuthorId }, createdAuthor);
     }
 
     [HttpPut("{id:int}")]
-    public async Task<ActionResult> UpdateAuthor(int id, [FromBody] string author)
+    public async Task<ActionResult> UpdateAuthor(int id, [FromBody] Author author)
     {
-        _logger.LogInformation("Updating author");
-        return NoContent();
+        _logger.LogInformation("Updating author", id);
+
+        var updatedAuthor = await _service.UpdateAuthor(id, author);
+
+        return Accepted(updatedAuthor);
     }
 
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> DeleteAuthor(int id)
     {
-        _logger.LogInformation("Deleting author");
-        return NoContent();
+        _logger.LogInformation("Deleting author", id);
+
+        var deletedAuthor = await _service.DeleteAuthor(id);
+
+        return Accepted(deletedAuthor);
     }
 }

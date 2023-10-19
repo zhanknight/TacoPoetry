@@ -38,16 +38,17 @@ public class AuthorService : IAuthorService
 
     public async Task<Author> UpdateAuthor(int id, Author author)
     {
-        _context.Entry(author).State = EntityState.Modified;
+        _context.Update(author);
         await _context.SaveChangesAsync();
 
         return author;
     }
 
-    public async Task DeleteAuthor(int id)
+    public async Task<Author> DeleteAuthor(int id)
     {
         var author = await _context.Author.FindAsync(id);
         _context.Author.Remove(author);
         await _context.SaveChangesAsync();
+        return author;
     }
 }

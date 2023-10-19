@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TacoMusings.API.Models;
+using TacoMusings.API.Services.Interfaces;
 
 namespace TacoMusings.API.Controllers;
 
@@ -7,16 +9,19 @@ namespace TacoMusings.API.Controllers;
 public class ContentController : ControllerBase
 {
     private readonly ILogger<ContentController> _logger;
+    private readonly IContentService _service;
 
-    public ContentController(ILogger<ContentController> logger)
+    public ContentController(ILogger<ContentController> logger, IContentService service)
     {
         _logger = logger;
+        _service = service;
     }
 
     [HttpGet]
-    public async Task<ActionResult<string>> GetAllContent()
+    public async Task<ActionResult<IEnumerable<Content>>> GetAllContent()
     {
-        return "All Content";
+        var result = await _service.GetContent();
+        return Ok(result);
     }
 
     [HttpGet("{id:int}")]
