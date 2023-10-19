@@ -9,9 +9,9 @@ namespace TacoMusings.API.Controllers;
 public class AuthorsController : ControllerBase
 {
     private readonly ILogger<AuthorsController> _logger;
-    private readonly TacoMusingContext _context;
+    private readonly TacoMusingsContext _context;
 
-    public AuthorsController(ILogger<AuthorsController> logger, TacoMusingContext context)
+    public AuthorsController(ILogger<AuthorsController> logger, TacoMusingsContext context)
     {
         _logger = logger;
         _context = context;

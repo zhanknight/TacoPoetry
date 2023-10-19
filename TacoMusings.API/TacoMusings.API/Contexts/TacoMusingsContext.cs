@@ -3,14 +3,14 @@ using TacoMusings.API.Models;
 
 namespace TacoMusings.API.Contexts;
 
-public partial class TacoMusingContext : DbContext
+public partial class TacoMusingsContext : DbContext
 {
 
-    public TacoMusingContext()
+    public TacoMusingsContext()
     {
     }
 
-    public TacoMusingContext(DbContextOptions<TacoMusingContext> options)
+    public TacoMusingsContext(DbContextOptions<TacoMusingsContext> options)
         : base(options)
     {
     }
