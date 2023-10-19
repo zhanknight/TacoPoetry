@@ -45,7 +45,6 @@ public class AuthorsController : ControllerBase
         _logger.LogInformation("Creating new author", author);
 
         var createdAuthor = await _service.CreateAuthor(author);
-        await Console.Out.WriteLineAsync(createdAuthor.AuthorId.ToString());
 
         return CreatedAtAction(nameof(GetAuthor), new { id = createdAuthor.AuthorId }, createdAuthor);
     }

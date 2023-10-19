@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace TacoMusings.API.Models;
@@ -20,6 +21,7 @@ public partial class ContentType
     [Unicode(false)]
     public string ContentTypeDescription { get; set; }
 
+    [JsonIgnore]
     [InverseProperty("ContentTypeNavigation")]
     public virtual ICollection<Content> Content { get; set; } = new List<Content>();
 }

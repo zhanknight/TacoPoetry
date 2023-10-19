@@ -18,7 +18,10 @@ public class ContentService : IContentService
 
     public async Task<IEnumerable<Content>> GetContent()
     {
-        var content = await _context.Content.ToListAsync();
+        var content = await _context.Content
+            .Include(c => c.ContentAuthorNavigation)
+            .Include(c => c.ContentTypeNavigation)
+            .ToListAsync();
         return content;
     }
 
@@ -38,16 +41,17 @@ public class ContentService : IContentService
 
     public async Task<Content> UpdateContent(int id, Content content)
     {
-        _context.Entry(content).State = EntityState.Modified;
+        _context.Update(content);
         await _context.SaveChangesAsync();
 
         return content;
     }
 
-    public async Task DeleteContent(int id)
+    public async Task<Content> DeleteContent(int id)
     {
         var content = await _context.Content.FindAsync(id);
         _context.Content.Remove(content);
         await _context.SaveChangesAsync();
+        return content;
     }
 }
