@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using TacoMusings.API.Contexts;
 
 namespace TacoMusings.API.Controllers;
 
@@ -7,17 +9,20 @@ namespace TacoMusings.API.Controllers;
 public class AuthorsController : ControllerBase
 {
     private readonly ILogger<AuthorsController> _logger;
+    private readonly TacoMusingContext _context;
 
-    public AuthorsController(ILogger<AuthorsController> logger)
+    public AuthorsController(ILogger<AuthorsController> logger, TacoMusingContext context)
     {
         _logger = logger;
+        _context = context;
     }
 
 
     [HttpGet]
     public async Task<ActionResult<string[]>> GetAuthors()
     {
-        return new string[] { "Author One", "Author Two" };
+        var test = await _context.Author.FirstOrDefaultAsync();
+        return new string[] { test.AuthorName, test.AuthorBio };
     }
 
     [HttpGet("{id:int}")]
