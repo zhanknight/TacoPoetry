@@ -35,12 +35,9 @@ public class TagService : ITagService
         return test;
     }
 
-    public async Task<Tag> CreateTag(Tag tag)
+    public async Task<Tag> CreateTag(string tag)
     {
-        _context.Tag.Add(tag);
-        await _context.SaveChangesAsync();
-
-        return tag;
+        throw new NotImplementedException();
     }
 
     public async Task<Tag> UpdateTag(int id, Tag tag)

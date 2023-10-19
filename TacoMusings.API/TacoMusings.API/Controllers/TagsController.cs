@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.TagHelpers.Cache;
 using TacoMusings.API.Models;
 using TacoMusings.API.Services.Interfaces;
 
@@ -19,9 +18,10 @@ public class TagsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<string[]>> GetTags()
+    public async Task<ActionResult<IEnumerable<Tag>>> GetTags()
     {
-        return new string[] { "Tag One", "Tag Two" };
+        var tags = await _service.GetAllTags();
+        return Ok(tags);
     }
 
     [HttpGet("{id}")]
@@ -34,9 +34,15 @@ public class TagsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> AddTag(string tag)
     {
-        _logger.LogInformation("Adding new tag");
+        // not implemented yet
+        return NoContent();
+    }
 
-        return CreatedAtRoute("GetTag", new { id = 1 }, "Tag One");
+    [HttpPatch]
+    public async Task<ActionResult> AddTagToContent(int tagId, int contentId)
+    {
+        // not implemented yet
+        return NoContent();
     }
 
 }

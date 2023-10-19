@@ -4,7 +4,7 @@ namespace TacoMusings.API.Services.Interfaces
 {
     public interface ITagService
     {
-        Task<Tag> CreateTag(Tag tag);
+        Task<Tag> CreateTag(string tag);
         Task DeleteTag(int id);
         Task<IEnumerable<Tag>> GetAllTags();
         Task<IEnumerable<Tag>> GetTagByContentId(int contentId);

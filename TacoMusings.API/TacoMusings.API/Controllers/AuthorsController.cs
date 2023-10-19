@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TacoMusings.API.Contexts;
 using TacoMusings.API.Models;
 using TacoMusings.API.Services.Interfaces;
 
