@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TacoMusings.API.Models;
+using TacoMusings.API.Services.Interfaces;
 
 namespace TacoMusings.API.Controllers;
 
@@ -7,49 +9,64 @@ namespace TacoMusings.API.Controllers;
 public class ContentController : ControllerBase
 {
     private readonly ILogger<ContentController> _logger;
+    private readonly IContentService _service;
 
-    public ContentController(ILogger<ContentController> logger)
+    public ContentController(ILogger<ContentController> logger, IContentService service)
     {
         _logger = logger;
+        _service = service;
     }
 
     [HttpGet]
-    public async Task<ActionResult<string>> GetAllContent()
+    public async Task<ActionResult<IEnumerable<Content>>> GetAllContent()
     {
-        return "All Content";
+        var result = await _service.GetContent();
+        return Ok(result);
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<string>> GetContentById(int id)
+    public async Task<ActionResult<Content>> GetContentById(int id)
     {
-        return "Content";
+        var result = await _service.GetContentById(id);
+
+        if (result == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(result);
     }
 
     [HttpGet("{filtermethod:alpha}")]
-    public async Task<ActionResult<string>> GetFilteredContent(string filtermethod)
+    public async Task<ActionResult<IEnumerable<Content>>> GetFilteredContent(string filtermethod)
     {
-        return "Content";
+        // not implemeted yet
+        return NoContent();
     }
 
     [HttpPost]
-    public async Task<ActionResult> CreateContent([FromBody] string content)
+    public async Task<ActionResult> CreateContent([FromBody] Content content)
     {
-        _logger.LogInformation("Creating new content");
+        _logger.LogInformation("Creating new content", content);
 
-        return CreatedAtRoute("GetContent", new { id = 1 }, "Content");
+        var createdContent = await _service.CreateContent(content);
+
+        return CreatedAtAction(nameof(GetContentById), new { id = createdContent.ContentId }, createdContent);
     }
 
     [HttpPut("{id:int}")]
-    public async Task<ActionResult> UpdateContent(int id, [FromBody] string content)
+    public async Task<ActionResult> UpdateContent(int id, [FromBody] Content content)
     {
-        _logger.LogInformation("Updating content");
-        return NoContent();
+        _logger.LogInformation("Updating content", id);
+        var updatedContent = await _service.UpdateContent(id, content);
+        return Accepted(updatedContent);
     }
 
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> DeleteContent(int id)
     {
-        _logger.LogInformation("Deleting content");
-        return NoContent();
+        _logger.LogInformation("Deleting content", id);
+        var deletedContent = await _service.DeleteContent(id);
+        return Accepted(deletedContent);
     }
 }

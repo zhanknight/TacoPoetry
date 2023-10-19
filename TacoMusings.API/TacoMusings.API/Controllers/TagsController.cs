@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TacoMusings.API.Models;
+using TacoMusings.API.Services.Interfaces;
 
 namespace TacoMusings.API.Controllers;
 
@@ -7,24 +9,40 @@ namespace TacoMusings.API.Controllers;
 public class TagsController : ControllerBase
 {
     private readonly ILogger<TagsController> _logger;
+    private readonly ITagService _service;
 
-    public TagsController(ILogger<TagsController> logger)
+    public TagsController(ILogger<TagsController> logger, ITagService service)
     {
         _logger = logger;
+        _service = service;
     }
 
     [HttpGet]
-    public async Task<ActionResult<string[]>> GetTags()
+    public async Task<ActionResult<IEnumerable<Tag>>> GetTags()
     {
-        return new string[] { "Tag One", "Tag Two" };
+        var tags = await _service.GetAllTags();
+        return Ok(tags);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<IEnumerable<Tag>>> GetTagsByContentID(int id)
+    {
+        var result = await _service.GetTagByContentId(id);
+        return Ok(result);
     }
 
     [HttpPost]
     public async Task<ActionResult> AddTag(string tag)
     {
-        _logger.LogInformation("Adding new tag");
+        // not implemented yet
+        return NoContent();
+    }
 
-        return CreatedAtRoute("GetTag", new { id = 1 }, "Tag One");
+    [HttpPatch]
+    public async Task<ActionResult> AddTagToContent(int tagId, int contentId)
+    {
+        // not implemented yet
+        return NoContent();
     }
 
 }
