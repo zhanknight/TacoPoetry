@@ -18,27 +18,29 @@ public class ContentController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Content>>> GetAllContent()
+    public async Task<ActionResult<IEnumerable<ContentView>>> GetAllContent()
     {
         var result = await _service.GetContent();
         return Ok(result);
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<Content>> GetContentById(int id)
+    public async Task<ActionResult<ContentView>> GetContentById(int id)
     {
-        var result = await _service.GetContentById(id);
+        var contentExists = await _service.ContentExists(id);
 
-        if (result == null)
+        if (!contentExists)
         {
             return NotFound();
         }
+
+        var result = await _service.GetContentById(id);
 
         return Ok(result);
     }
 
     [HttpGet("{filtermethod:alpha}")]
-    public async Task<ActionResult<IEnumerable<Content>>> GetFilteredContent(string filtermethod)
+    public async Task<ActionResult<IEnumerable<ContentView>>> GetFilteredContent(string filtermethod)
     {
         // not implemeted yet
         return NoContent();
@@ -47,6 +49,7 @@ public class ContentController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> CreateContent([FromBody] Content content)
     {
+
         _logger.LogInformation("Creating new content", content);
 
         var createdContent = await _service.CreateContent(content);
@@ -57,6 +60,14 @@ public class ContentController : ControllerBase
     [HttpPut("{id:int}")]
     public async Task<ActionResult> UpdateContent(int id, [FromBody] Content content)
     {
+
+        var contentExists = await _service.ContentExists(id);
+
+        if (!contentExists)
+        {
+            return NotFound();
+        }
+
         _logger.LogInformation("Updating content", id);
         var updatedContent = await _service.UpdateContent(id, content);
         return Accepted(updatedContent);
@@ -65,6 +76,14 @@ public class ContentController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> DeleteContent(int id)
     {
+
+        var contentExists = await _service.ContentExists(id);
+
+        if (!contentExists)
+        {
+            return NotFound();
+        }
+
         _logger.LogInformation("Deleting content", id);
         var deletedContent = await _service.DeleteContent(id);
         return Accepted(deletedContent);

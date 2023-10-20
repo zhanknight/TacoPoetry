@@ -18,21 +18,23 @@ public class AuthorsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
+    public async Task<ActionResult<IEnumerable<AuthorView>>> GetAuthors()
     {
         var result = await _service.GetAuthors();
         return Ok(result);
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<Author>> GetAuthor(int id)
+    public async Task<ActionResult<AuthorView>> GetAuthor(int id)
     {
-        var result = await _service.GetAuthorById(id);
+        var authorExists = await _service.AuthorExists(id);
 
-        if (result == null)
+        if (!authorExists)
         {
             return NotFound();
         }
+
+        var result = await _service.GetAuthorById(id);
 
         return Ok(result);
     }
@@ -50,6 +52,14 @@ public class AuthorsController : ControllerBase
     [HttpPut("{id:int}")]
     public async Task<ActionResult> UpdateAuthor(int id, [FromBody] Author author)
     {
+
+        var authorExists = await _service.AuthorExists(id);
+
+        if (!authorExists)
+        {
+            return NotFound();
+        }
+
         _logger.LogInformation("Updating author", id);
 
         var updatedAuthor = await _service.UpdateAuthor(id, author);
@@ -60,6 +70,13 @@ public class AuthorsController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<ActionResult> DeleteAuthor(int id)
     {
+        var authorExists = await _service.AuthorExists(id);
+
+        if (!authorExists)
+        {
+            return NotFound();
+        }
+
         _logger.LogInformation("Deleting author", id);
 
         var deletedAuthor = await _service.DeleteAuthor(id);

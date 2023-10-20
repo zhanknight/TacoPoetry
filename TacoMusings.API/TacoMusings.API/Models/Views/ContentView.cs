@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 
 namespace TacoMusings.API.Models;
@@ -11,19 +10,19 @@ public partial class ContentView
     [Column("ContentID")]
     public int ContentId { get; set; }
 
-    public int ContentAuthor { get; set; }
+    public int ContentAuthorId { get; set; }
 
-    public int ContentType { get; set; }
+    public string ContentType { get; set; } = string.Empty;
 
     [Required]
     [StringLength(255)]
     [Unicode(false)]
-    public string ContentTitle { get; set; }
+    public string ContentTitle { get; set; } = string.Empty;
 
     [Required]
     [StringLength(1024)]
     [Unicode(false)]
-    public string ContentBody { get; set; }
+    public string ContentBody { get; set; } = string.Empty;
    
 
     [Column(TypeName = "datetime")]
@@ -34,16 +33,7 @@ public partial class ContentView
     [Unicode(false)]
     public string? ContentSource { get; set; }
 
+    public string ContentAuthor { get; set; } = string.Empty;
 
-    [ForeignKey("ContentAuthor")]
-    [InverseProperty("Content")]
-    public virtual Author? ContentAuthorNavigation { get; set; }
-
-
-    [ForeignKey("ContentType")]
-    [InverseProperty("Content")]
-    public virtual ContentType? ContentTypeNavigation { get; set; }
-
-    [InverseProperty("MappedContent")]
-    public virtual ICollection<TagMap> TagMap { get; set; } = new List<TagMap>();
+    public virtual ICollection<string> Tags { get; set; } = new List<string>();
 }

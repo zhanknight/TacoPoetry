@@ -2,6 +2,7 @@
 using TacoMusings.API.Contexts;
 using TacoMusings.API.Models;
 using TacoMusings.API.Services.Interfaces;
+using TacoMusings.API.Utilities;
 
 namespace TacoMusings.API.Services;
 
@@ -16,42 +17,62 @@ public class ContentService : IContentService
         _context = context;
     }
 
-    public async Task<IEnumerable<Content>> GetContent()
+    public async Task<IEnumerable<ContentView>> GetContent()
     {
         var content = await _context.Content
             .Include(c => c.ContentAuthorNavigation)
             .Include(c => c.ContentTypeNavigation)
+            .Include(c => c.TagMap)
             .ToListAsync();
-        return content;
+
+        List<ContentView> contentViews = new List<ContentView>();
+
+        foreach (var c in content)
+        {
+            contentViews.Add(c.ToViewModel());
+        }
+
+        return contentViews;
     }
 
-    public async Task<Content> GetContentById(int id)
+    public async Task<ContentView> GetContentById(int id)
     {
-        var content = await _context.Content.FindAsync(id);
-        return await _context.Content.FindAsync(id);
+        var content = await _context.Content
+            .Include(c => c.ContentAuthorNavigation)
+            .Include(c => c.ContentTypeNavigation)
+            .Include(c => c.TagMap)
+            .FirstOrDefaultAsync();
+
+        return content.ToViewModel();
     }
 
-    public async Task<Content> CreateContent(Content content)
+    public async Task<ContentView> CreateContent(Content content)
     {
         _context.Content.Add(content);
         await _context.SaveChangesAsync();
 
-        return content;
+        return content.ToViewModel();
     }
 
-    public async Task<Content> UpdateContent(int id, Content content)
+    public async Task<ContentView> UpdateContent(int id, Content content)
     {
         _context.Update(content);
         await _context.SaveChangesAsync();
 
-        return content;
+        return content.ToViewModel();
     }
 
-    public async Task<Content> DeleteContent(int id)
+    public async Task<ContentView> DeleteContent(int id)
     {
         var content = await _context.Content.FindAsync(id);
         _context.Content.Remove(content);
         await _context.SaveChangesAsync();
-        return content;
+        return content.ToViewModel();
+    }
+
+    public async Task<bool> ContentExists(int id)
+    {
+        var contentExists = await _context.Content.AnyAsync(c => c.ContentId == id);
+        return contentExists;
     }
 }
