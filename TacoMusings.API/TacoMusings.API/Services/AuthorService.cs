@@ -37,20 +37,28 @@ public class AuthorService : IAuthorService
         return author.ToViewModel();        
     }
 
-    public async Task<AuthorView> CreateAuthor(Author author)
+    public async Task<AuthorView> CreateAuthor(AuthorCreate author)
     {
-        _context.Author.Add(author);
+        var newAuthor = author.ToEntityModel();
+        _context.Author.Add(newAuthor);
         await _context.SaveChangesAsync();
 
-        return author.ToViewModel();
+        return newAuthor.ToViewModel();
     }
 
-    public async Task<AuthorView> UpdateAuthor(int id, Author author)
+    public async Task<AuthorView> UpdateAuthor(int id, AuthorCreate author)
     {
-        _context.Update(author);
+        var existingAuthor = await _context.Author.FindAsync(id);
+        var incomingAuthor = author.ToEntityModel();
+
+        existingAuthor.AuthorName = incomingAuthor.AuthorName;
+        existingAuthor.AuthorBio = incomingAuthor.AuthorBio;
+        existingAuthor.AuthorPhotoId = incomingAuthor.AuthorPhotoId;
+
+        _context.Update(existingAuthor);
         await _context.SaveChangesAsync();
 
-        return author.ToViewModel();
+        return existingAuthor.ToViewModel();
     }
 
     public async Task<AuthorView> DeleteAuthor(int id)

@@ -40,7 +40,7 @@ public class AuthorsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> CreateAuthor([FromBody] Author author)
+    public async Task<ActionResult> CreateAuthor([FromBody] AuthorCreate author)
     {
         _logger.LogInformation("Creating new author", author);
 
@@ -50,7 +50,7 @@ public class AuthorsController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
-    public async Task<ActionResult> UpdateAuthor(int id, [FromBody] Author author)
+    public async Task<ActionResult> UpdateAuthor(int id, [FromBody] AuthorCreate author)
     {
 
         var authorExists = await _service.AuthorExists(id);

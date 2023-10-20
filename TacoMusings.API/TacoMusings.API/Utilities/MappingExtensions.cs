@@ -19,6 +19,16 @@ public static class MappingExtensions
         };
     }
 
+    public static Author ToEntityModel(this AuthorCreate author)
+    {
+        return new Author
+        {
+            AuthorName = author.AuthorName,
+            AuthorBio = author.AuthorBio,
+            AuthorPhotoId = author.AuthorPhotoId
+        };
+    }
+
     public static ContentView ToViewModel(this Content content)
     {
 
@@ -54,5 +64,4 @@ public static class MappingExtensions
 
         };
     }
-
 }

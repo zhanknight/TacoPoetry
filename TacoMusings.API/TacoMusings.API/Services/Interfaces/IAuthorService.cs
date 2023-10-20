@@ -4,11 +4,11 @@ namespace TacoMusings.API.Services.Interfaces
 {
     public interface IAuthorService
     {
-        Task<AuthorView> CreateAuthor(Author author);
+        Task<AuthorView> CreateAuthor(AuthorCreate author);
         Task<AuthorView> DeleteAuthor(int id);
         Task<AuthorView> GetAuthorById(int id);
         Task<IEnumerable<AuthorView>> GetAuthors();
-        Task<AuthorView> UpdateAuthor(int id, Author author);
+        Task<AuthorView> UpdateAuthor(int id, AuthorCreate author);
         Task<bool> AuthorExists(int id);
 
     }
