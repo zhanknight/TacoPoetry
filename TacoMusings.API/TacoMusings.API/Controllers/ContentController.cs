@@ -47,7 +47,7 @@ public class ContentController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> CreateContent([FromBody] Content content)
+    public async Task<ActionResult> CreateContent([FromBody] ContentCreate content)
     {
 
         _logger.LogInformation("Creating new content", content);
@@ -58,7 +58,7 @@ public class ContentController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
-    public async Task<ActionResult> UpdateContent(int id, [FromBody] Content content)
+    public async Task<ActionResult> UpdateContent(int id, [FromBody] ContentCreate content)
     {
 
         var contentExists = await _service.ContentExists(id);

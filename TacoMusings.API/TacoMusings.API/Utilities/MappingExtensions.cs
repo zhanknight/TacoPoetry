@@ -64,4 +64,23 @@ public static class MappingExtensions
 
         };
     }
+
+    public static Content ToEntityModel(this ContentCreate content)
+    {
+        return new Content
+        {
+            ContentAuthor = content.ContentAuthorId,
+            ContentType = content.ContentType switch
+            {
+                "Quote" => 1,
+                "Poem" => 2,
+                "Haiku" => 3,
+                _ => 0
+            },
+            ContentTitle = content.ContentTitle,
+            ContentBody = content.ContentBody,
+            ContentDate = content.ContentDate.HasValue ? content.ContentDate : DateTime.MinValue,
+            ContentSource = content.ContentSource.IsNullOrEmpty() ? "Unknown" : content.ContentSource
+        };
+    }
 }

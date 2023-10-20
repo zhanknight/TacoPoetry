@@ -43,6 +43,9 @@ public partial class TacoMusingsContext : DbContext
             entity.HasOne(d => d.ContentTypeNavigation).WithMany(p => p.Content)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Content__Content__6477ECF3");
+
+            // entity.Navigation(e => e.TagMap).AutoInclude();
+
         });
 
         modelBuilder.Entity<ContentType>(entity =>

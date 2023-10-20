@@ -37,7 +37,7 @@ public partial class Content
 
     [ForeignKey("ContentAuthor")]
     [InverseProperty("Content")]
-    public virtual Author? ContentAuthorNavigation { get; set; }
+    public virtual Author? ContentAuthorNavigation { get; set; } 
 
 
     [ForeignKey("ContentType")]
