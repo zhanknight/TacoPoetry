@@ -43,6 +43,9 @@ public partial class TacoMusingsContext : DbContext
             entity.HasOne(d => d.ContentTypeNavigation).WithMany(p => p.Content)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Content__Content__6477ECF3");
+
+            // entity.Navigation(e => e.TagMap).AutoInclude();
+
         });
 
         modelBuilder.Entity<ContentType>(entity =>
@@ -68,6 +71,8 @@ public partial class TacoMusingsContext : DbContext
             entity.HasOne(d => d.MappedTag).WithMany(p => p.TagMap)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__TagMap__MappedTa__05D8E0BE");
+
+            entity.Navigation(e => e.MappedTag).AutoInclude();
         });
 
         OnModelCreatingPartial(modelBuilder);

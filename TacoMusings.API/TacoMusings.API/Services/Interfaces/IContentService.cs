@@ -4,10 +4,11 @@ namespace TacoMusings.API.Services.Interfaces
 {
     public interface IContentService
     {
-        Task<Content> CreateContent(Content content);
-        Task<Content> DeleteContent(int id);
-        Task<IEnumerable<Content>> GetContent();
-        Task<Content> GetContentById(int id);
-        Task<Content> UpdateContent(int id, Content content);
+        Task<ContentView> CreateContent(ContentCreate content);
+        Task<ContentView> DeleteContent(int id);
+        Task<IEnumerable<ContentView>> GetContent();
+        Task<ContentView> GetContentById(int id);
+        Task<ContentView> UpdateContent(int id, ContentCreate content);
+        Task<bool> ContentExists(int id);
     }
 }

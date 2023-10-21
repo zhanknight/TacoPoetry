@@ -2,6 +2,7 @@
 using TacoMusings.API.Contexts;
 using TacoMusings.API.Models;
 using TacoMusings.API.Services.Interfaces;
+using TacoMusings.API.Utilities;
 
 namespace TacoMusings.API.Services;
 
@@ -16,39 +17,61 @@ public class AuthorService : IAuthorService
         _context = context;
     }
 
-    public async Task<IEnumerable<Author>> GetAuthors()
+    public async Task<IEnumerable<AuthorView>> GetAuthors()
     {
         var authors = await _context.Author.ToListAsync();
-        return authors;
+        List<AuthorView> authorViews = new List<AuthorView>();
+
+        foreach (var a in authors)
+        {
+            authorViews.Add(a.ToViewModel());
+        }
+
+        return authorViews;
     }
 
-    public async Task<Author> GetAuthorById(int id)
+    public async Task<AuthorView> GetAuthorById(int id)
     {
-        var author = await _context.Author.FindAsync(id);
-        return await _context.Author.FindAsync(id);
+        var author = await _context.Author.Where(a => a.AuthorId == id).FirstOrDefaultAsync();
+
+        return author.ToViewModel();        
     }
 
-    public async Task<Author> CreateAuthor(Author author)
+    public async Task<AuthorView> CreateAuthor(AuthorCreate author)
     {
-        _context.Author.Add(author);
+        var newAuthor = author.ToEntityModel();
+        _context.Author.Add(newAuthor);
         await _context.SaveChangesAsync();
 
-        return author;
+        return newAuthor.ToViewModel();
     }
 
-    public async Task<Author> UpdateAuthor(int id, Author author)
+    public async Task<AuthorView> UpdateAuthor(int id, AuthorCreate author)
     {
-        _context.Update(author);
+        var existingAuthor = await _context.Author.FindAsync(id);
+        var incomingAuthor = author.ToEntityModel();
+
+        existingAuthor.AuthorName = incomingAuthor.AuthorName;
+        existingAuthor.AuthorBio = incomingAuthor.AuthorBio;
+        existingAuthor.AuthorPhotoId = incomingAuthor.AuthorPhotoId;
+
+        _context.Update(existingAuthor);
         await _context.SaveChangesAsync();
 
-        return author;
+        return existingAuthor.ToViewModel();
     }
 
-    public async Task<Author> DeleteAuthor(int id)
+    public async Task<AuthorView> DeleteAuthor(int id)
     {
         var author = await _context.Author.FindAsync(id);
         _context.Author.Remove(author);
         await _context.SaveChangesAsync();
-        return author;
+        return author.ToViewModel();
+    }
+
+    public async Task<bool> AuthorExists(int id)
+    {
+        var authorExists = await _context.Author.AnyAsync(a => a.AuthorId == id);
+        return authorExists;
     }
 }
