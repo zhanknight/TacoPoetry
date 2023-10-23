@@ -1,0 +1,31 @@
+﻿<div class="max-w-sm rounded overflow-hidden shadow-lg m-2">
+    
+    <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2">@ContentTitle</div>
+        <p class="text-gray-700 text-base">
+            @ContentBody
+        </p>
+    </div>
+    <div class="px-6 pt-4 pb-2">
+
+
+        @foreach (string myParam in ContentTags)
+            {
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">@myParam</span>
+            }
+    </div>
+
+</div>
+
+@code {
+    [Parameter]
+    public string? ContentTitle { get; set; }
+    [Parameter]
+    public string? ContentBody { get; set; }
+    [Parameter]
+    public List<string> ContentTags { get; set; } = new List<string>();
+    [Parameter]
+    public string? ContentAuthor { get; set; }
+
+
+}
