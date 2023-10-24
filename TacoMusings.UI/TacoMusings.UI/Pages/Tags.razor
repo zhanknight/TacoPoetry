@@ -7,8 +7,40 @@
         <p class="mt-2 text-slate-500">All Taco Musings are tagged based on their topics. Click a tag!</p>
 
     </div>
+
 </div>
+
+<div class="md:flex">
+
+<div class="p-8">
+    <div class="flex flex-wrap items-center p-4">
+
+            @foreach (string t in testTags)
+            {
+                <NavLink href="@($"tags/{@t}")" class="block mt-4 lg:inline-block lg:mt-0 bg-yellow-500 hover:bg-amber-300 mr-4 mx-1 my-2 px-2 py-1 rounded">
+                    @t
+                </NavLink>
+
+            }
+
+
+
+    </div>
+</div>
+</div>
+
 
 @code {
 
+    [Inject]
+    public ITacoDataService TacoDataService { get; set; }
+
+    List<string> allTags = new List<string>();
+
+    protected async override Task OnInitializedAsync()
+    {
+        var allTags = await TacoDataService.GetAllTags();
+    }
+
+    List<string> testTags = new List<string> { "hello", "world", "taco" };
 }

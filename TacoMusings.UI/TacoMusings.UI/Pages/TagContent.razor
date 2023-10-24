@@ -1,0 +1,51 @@
+﻿
+@page "/tags/{selectedTag}"
+
+<div class="md:flex">
+
+    <div class="p-8">
+        <div class="uppercase tracking-wide text-sm text-orange-500 font-semibold">Viewing musings tagged with @selectedTag</div>
+    </div>
+
+
+
+</div>
+<div class="container flex flex-wrap p-3 mx-auto">
+
+
+
+    @foreach (Content c in selectedContent)
+    {
+        <ContentCard Content="c" />
+
+        }
+    
+</div>
+
+@code {
+
+    // pass in the author or tag
+    // also pass in whether its a tag or author
+    // also pass in a list of content
+    // ACTUALLY
+    // Just pass in a bool for tag or author
+    // and an id
+    // page itself will get the data on init
+
+    // [Parameter]
+    // [SupplyParameterFromQuery(Name = "isTag")]
+    // public bool isTag { get; set; }
+
+    [Parameter]
+    public string selectedTag { get; set; }
+
+    [Parameter]
+    public List<Content>? selectedContent { get; set; } = new List<Content>();
+
+    Content testContent = new Content { ContentAuthor = "Evan Knight", ContentBody = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.", ContentTitle = "Lor them!", Tags = new List<string> { "hello", "world", "taco" } };
+
+    protected override async Task OnInitializedAsync()
+    {
+        selectedContent.Add(testContent);
+    }
+}

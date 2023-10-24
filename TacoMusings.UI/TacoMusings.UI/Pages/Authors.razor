@@ -13,9 +13,7 @@
 
 <div class="md:flex">
 
-    <AuthorCard AuthorName="Evan Knight" AuthorBio="Evan is a guy who is using blazor and tailwind for the first time. It's super nifty, wow." />
-    <AuthorCard AuthorName="Mr Taco" AuthorBio="Evan is a guy who is using blazor and tailwind for the first time. It's super nifty, wow." />
-    <AuthorCard AuthorName="Mr Bell" AuthorBio="Evan is a guy who is using blazor and tailwind for the first time. It's super nifty, wow." />
+    <AuthorCard Author="testAuthor" />
 
 
 
@@ -28,7 +26,12 @@
     [Inject]
     public ITacoDataService TacoDataService { get; set; }
 
+    public Author testAuthor = new Author { AuthorName = "Evan Knight", AuthorBio = "Evan is a guy who is using blazor and tailwind for the first time. It's super nifty, wow." };
+
+
+
     public List<Author> AllAuthors { get; set; } = new List<Author>();
+
 
     protected async override Task OnInitializedAsync()
     {

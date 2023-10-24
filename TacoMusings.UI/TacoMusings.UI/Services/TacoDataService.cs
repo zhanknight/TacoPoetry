@@ -22,7 +22,12 @@ public class TacoDataService : ITacoDataService
     public async Task<IEnumerable<Author>> GetAllAuthors()
     {
         return await JsonSerializer.DeserializeAsync<IEnumerable<Author>>
-            (await _httpClient.GetStreamAsync($"/api/content"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            (await _httpClient.GetStreamAsync($"/api/author"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
     }
 
+    public async Task<IEnumerable<string>> GetAllTags()
+    {
+        return await JsonSerializer.DeserializeAsync<IEnumerable<string>>
+                   (await _httpClient.GetStreamAsync($"/api/tags"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+    }
 }
