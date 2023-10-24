@@ -1,6 +1,6 @@
-﻿<div class="max-w-sm rounded overflow-hidden shadow-lg m-2">
+﻿<div class="container rounded overflow-hidden shadow-lg m-1">
     
-    <div class="px-6 py-4">
+    <div class="px-6 pb-4 pt-2">
         <div class="font-bold text-xl mb-2">@Content.ContentTitle</div>
         <p class="text-gray-700 text-base">
             @Content.ContentBody
@@ -11,8 +11,10 @@
 
         @foreach (string t in @Content.Tags)
             {
-            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">@t</span>
+            <NavLink href="@($"tags/{@t}")" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 hover:bg-amber-300">@t</NavLink>
             }
+
+
     </div>
 
 </div>
