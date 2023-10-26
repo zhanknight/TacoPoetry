@@ -13,6 +13,13 @@
 
 <div class=" flex flex-wrap p-2 ">
 
+    @foreach (Author a in AllAuthors)
+    {
+        <AuthorCard Author="a" />
+
+    }
+
+
     <AuthorCard Author="testAuthor" />
 
 

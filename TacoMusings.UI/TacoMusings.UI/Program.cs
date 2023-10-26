@@ -11,7 +11,16 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-builder.Services.AddHttpClient<ITacoDataService, TacoDataService>(client => client.BaseAddress = new Uri("http://www.arstechnica.com"));
+builder.Services.AddHttpClient<ITacoDataService, TacoDataService>(client =>
+{
+    client.BaseAddress = new Uri("http://localhost:5221/");
+    client.DefaultRequestHeaders.Add("Access-Control-Allow-Origin", "*");
+    client.DefaultRequestHeaders.Add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    client.DefaultRequestHeaders.Add("Access-Control-Request-Headers", "content-type");
+    client.DefaultRequestHeaders.Add("accept", "application/json");
+
+})
+    ;
 
 // builder.Services.AddScoped<ITacoDataService, TacoDataService>();
 
