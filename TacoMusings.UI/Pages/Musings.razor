@@ -12,8 +12,11 @@
 
 <div class=" flex flex-wrap p-2 ">
 
-    <ContentCard Content="testContent" />
 
+@foreach (Content c in allContent)
+    {
+        <ContentCard Content="c" />
+    }
  
 </div>
 
@@ -22,5 +25,18 @@
 
 
     Content testContent = new Content { ContentAuthor = "Evan Knight", ContentBody = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.", ContentTitle = "Lor them!", Tags = new List<string> { "hello", "world", "taco" } };
+   
+    [Inject]
+    public ITacoDataService TacoDataService { get; set; }
 
+
+
+
+    public IEnumerable<Content> allContent { get; set; } = new List<Content>();
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        allContent = await TacoDataService.GetAllContent();
+    }
 }

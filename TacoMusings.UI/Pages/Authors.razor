@@ -20,7 +20,6 @@
     }
 
 
-    <AuthorCard Author="testAuthor" />
 
 
 
@@ -37,11 +36,11 @@
 
 
 
-    public List<Author> AllAuthors { get; set; } = new List<Author>();
+    public IEnumerable<Author> AllAuthors { get; set; } = new List<Author>();
 
 
     protected async override Task OnInitializedAsync()
     {
-        var AllAuthors = await TacoDataService.GetAllAuthors();
+        AllAuthors = await TacoDataService.GetAllAuthors();
     }
 }

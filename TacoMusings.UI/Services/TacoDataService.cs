@@ -16,19 +16,23 @@ public class TacoDataService : ITacoDataService
     public async Task<IEnumerable<Content>> GetAllContent()
     {
         return await JsonSerializer.DeserializeAsync<IEnumerable<Content>>
-            (await _httpClient.GetStreamAsync($"/api/content"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            (await _httpClient.GetStreamAsync($"/content"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
     }
 
     public async Task<IEnumerable<Author>> GetAllAuthors()
     {
         
         return await JsonSerializer.DeserializeAsync<IEnumerable<Author>>
-            (await _httpClient.GetStreamAsync($"/Authors"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            (await _httpClient.GetStreamAsync($"/authors"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
     }
 
     public async Task<IEnumerable<string>> GetAllTags()
     {
-        return await JsonSerializer.DeserializeAsync<IEnumerable<string>>
-                   (await _httpClient.GetStreamAsync($"/api/tags"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        var allTags = await JsonSerializer.DeserializeAsync<IEnumerable<Tag>>
+                   (await _httpClient.GetStreamAsync($"/tags"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+
+        IEnumerable<string> allTagNames = allTags.Select(t => t.TagName);
+
+        return allTagNames;
     }
 }
