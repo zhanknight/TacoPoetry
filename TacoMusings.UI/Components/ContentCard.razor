@@ -1,20 +1,20 @@
 ﻿<div class=" rounded overflow-hidden shadow-md m-1">
-    
+   
     <div class="px-6 pb-4 pt-2">
-        <div class="font-bold text-xl mb-2">@Content.ContentTitle</div>
+        <div class="font-bold text-xl mb-2">
+            @Content.ContentTitle
+        </div>
         <p class="text-gray-700 text-base">
             @Content.ContentBody
         </p>
     </div>
     <div class="px-6 pt-4 pb-2">
-
-
         @foreach (string t in @Content.Tags)
             {
-            <NavLink href="@($"tags/{@t}")" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 hover:bg-amber-300">@t</NavLink>
+            <NavLink href="@($"tags/{@t}")" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 hover:bg-amber-300">
+                @t
+            </NavLink>
             }
-
-
     </div>
 
 </div>
@@ -23,6 +23,5 @@
 
     [Parameter]
     public Content? Content { get; set; }
-
 
 }

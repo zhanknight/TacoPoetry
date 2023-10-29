@@ -34,7 +34,7 @@ public class AuthorService : IAuthorService
     {
         var author = await _context.Author.Where(a => a.AuthorId == id).FirstOrDefaultAsync();
 
-        return author.ToViewModel();        
+        return author.ToViewModel();
     }
 
     public async Task<AuthorView> CreateAuthor(AuthorCreate author)

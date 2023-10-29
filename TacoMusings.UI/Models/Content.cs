@@ -12,7 +12,7 @@ public partial class Content
     public string ContentTitle { get; set; } = string.Empty;
 
     public string ContentBody { get; set; } = string.Empty;
-   
+
     public DateTime? ContentDate { get; set; }
 
     public string? ContentSource { get; set; }

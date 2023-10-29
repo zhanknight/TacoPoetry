@@ -1,7 +1,5 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using TacoMusings.UI.Services.Interfaces;
 using TacoMusings.UI.Services;
+using TacoMusings.UI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
@@ -9,8 +7,7 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddHttpClient<ITacoDataService, TacoDataService>(client =>
 {
-    client.BaseAddress = new Uri("http://localhost:5221/");
-
+    client.BaseAddress = new Uri(builder.Configuration["TacoMusingsAPI"]);
 });
 
 var app = builder.Build();

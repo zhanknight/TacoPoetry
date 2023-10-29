@@ -1,6 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace TacoMusings.API.Models;
 
@@ -23,7 +23,7 @@ public partial class ContentView
     [StringLength(1024)]
     [Unicode(false)]
     public string ContentBody { get; set; } = string.Empty;
-   
+
 
     [Column(TypeName = "datetime")]
     public DateTime? ContentDate { get; set; }

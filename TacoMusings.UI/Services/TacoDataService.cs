@@ -21,7 +21,7 @@ public class TacoDataService : ITacoDataService
 
     public async Task<IEnumerable<Author>> GetAllAuthors()
     {
-        
+
         return await JsonSerializer.DeserializeAsync<IEnumerable<Author>>
             (await _httpClient.GetStreamAsync($"/authors"), new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
     }

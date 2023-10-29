@@ -1,5 +1,4 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using System.Runtime.CompilerServices;
 using TacoMusings.API.Models;
 
 namespace TacoMusings.API.Utilities;

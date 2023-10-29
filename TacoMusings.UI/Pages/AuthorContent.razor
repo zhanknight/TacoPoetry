@@ -1,25 +1,16 @@
-﻿
-@page "/authors/{selectedAuthor}"
+﻿@page "/authors/{selectedAuthor}"
 
 <div class="md:flex">
-
     <div class="pt-2 pb-1 px-6">
         <div class="uppercase tracking-wide text-sm text-orange-500 font-semibold">Viewing musings by @selectedAuthor</div>
     </div>
-
-
-
 </div>
+
 <div class="container flex flex-wrap p-3 mx-auto">
-
-
-
     @foreach (Content c in selectedContent)
     {
         <ContentCard Content="c" />
-
-        }
-    
+    }
 </div>
 
 @code {
