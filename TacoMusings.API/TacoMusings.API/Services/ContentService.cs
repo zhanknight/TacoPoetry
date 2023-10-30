@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using TacoMusings.API.Contexts;
 using TacoMusings.API.Models;
 using TacoMusings.API.Services.Interfaces;
@@ -87,7 +86,7 @@ public class ContentService : IContentService
             .Include(c => c.ContentAuthorNavigation)
             .Include(c => c.ContentTypeNavigation)
             .Include(c => c.TagMap)
-            .FirstOrDefaultAsync(); 
+            .FirstOrDefaultAsync();
 
         var incomingContent = content.ToEntityModel();
 

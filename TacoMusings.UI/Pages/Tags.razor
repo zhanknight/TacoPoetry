@@ -1,0 +1,38 @@
+﻿@page "/tags";
+
+<div class="md:flex">
+    <div class="pt-2 pb-1 px-6">
+        <div class="uppercase tracking-wide text-sm text-orange-500 font-semibold">Tags</div>
+        <p class="mt-2 text-slate-500">All Taco Musings are tagged based on their topics. Click a tag!</p>
+
+    </div>
+</div>
+
+<div class="container rounded overflow-hidden m-2">
+    <div class="container flex flex-wrap p-2 justify-around content-evenly">
+
+        @foreach (string t in allTags)
+        {
+        <div>
+            <NavLink href="@($"tags/{@t}")" class="shadow-md block mt-4 lg:inline-block lg:mt-0 bg-yellow-500 hover:bg-amber-300 mr-4 mx-1 my-2 px-2 py-1 rounded">
+                @t
+            </NavLink>
+        </div>
+        }
+
+    </div>
+</div>
+
+@code {
+
+    [Inject]
+    public ITacoDataService TacoDataService { get; set; }
+
+    IEnumerable<string> allTags = new List<string>();
+
+    protected async override Task OnInitializedAsync()
+    {
+        allTags = await TacoDataService.GetAllTags();
+    }
+
+}

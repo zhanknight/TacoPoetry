@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
-using Microsoft.EntityFrameworkCore;
 
 namespace TacoMusings.API.Models;
 
@@ -24,7 +23,7 @@ public partial class Content
     [StringLength(1024)]
     [Unicode(false)]
     public string ContentBody { get; set; }
-   
+
 
     [Column(TypeName = "datetime")]
     public DateTime? ContentDate { get; set; }
@@ -37,7 +36,7 @@ public partial class Content
 
     [ForeignKey("ContentAuthor")]
     [InverseProperty("Content")]
-    public virtual Author? ContentAuthorNavigation { get; set; } 
+    public virtual Author? ContentAuthorNavigation { get; set; }
 
 
     [ForeignKey("ContentType")]
