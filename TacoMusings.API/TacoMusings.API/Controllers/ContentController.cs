@@ -10,11 +10,13 @@ public class ContentController : ControllerBase
 {
     private readonly ILogger<ContentController> _logger;
     private readonly IContentService _service;
+    private readonly IAuthorService _authorService;
 
-    public ContentController(ILogger<ContentController> logger, IContentService service)
+    public ContentController(ILogger<ContentController> logger, IContentService service, IAuthorService authorService)
     {
         _logger = logger;
         _service = service;
+        _authorService = authorService;
     }
 
     [HttpGet]
@@ -39,11 +41,19 @@ public class ContentController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("{filtermethod:alpha}")]
-    public async Task<ActionResult<IEnumerable<ContentView>>> GetFilteredContent(string filtermethod)
+    [HttpGet("Author/{authorId:int}")]
+    public async Task<ActionResult<IEnumerable<ContentView>>> GetContentByAuthor(int authorId)
     {
-        // not implemeted yet
-        return NoContent();
+        var authorExists = await _authorService.AuthorExists(authorId);
+
+        if (!authorExists)
+        {
+            return NotFound();
+        }
+
+        var result = await _service.GetContentByAuthor(authorId);
+
+        return Ok(result);
     }
 
     [HttpPost]

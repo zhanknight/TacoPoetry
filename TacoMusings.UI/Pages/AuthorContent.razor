@@ -1,30 +1,40 @@
-﻿@page "/authors/{selectedAuthor}"
+﻿@page "/authors/{selectedAuthorId:int}"
 
 <div class="md:flex">
     <div class="pt-2 pb-1 px-6">
-        <div class="uppercase tracking-wide text-sm text-orange-500 font-semibold">Viewing musings by @selectedAuthor</div>
+        <div class="uppercase tracking-wide text-sm text-orange-500 font-semibold">Viewing musings by @selectedAuthorId</div>
     </div>
 </div>
 
 <div class="container flex flex-wrap p-3 mx-auto">
-    @foreach (Content c in selectedContent)
+
+    @if(!selectedContent.Any())
     {
-        <ContentCard Content="c" />
+        <div class="text-center text-2xl text-gray-500">No musings by this author yet!</div>
     }
+    else
+    {
+        @foreach (Content c in selectedContent)
+        {
+            <ContentCard Content="c" />
+        }       
+    }
+
+
 </div>
 
 @code {
 
     [Parameter]
-    public string selectedAuthor { get; set; }
+    public int selectedAuthorId { get; set; }
 
-    [Parameter]
-    public List<Content>? selectedContent { get; set; } = new List<Content>();
+    [Inject]
+    public ITacoDataService TacoDataService { get; set; }
 
-    Content testContent = new Content { ContentAuthor = "Evan Knight", ContentBody = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.", ContentTitle = "Lor them!", Tags = new List<string> { "hello", "world", "taco" } };
+    public IEnumerable<Content> selectedContent { get; set; } = new List<Content>();
 
-    protected override async Task OnInitializedAsync()
+    protected async override Task OnInitializedAsync()
     {
-        selectedContent.Add(testContent);
+        selectedContent = await TacoDataService.GetContentByAuthor(selectedAuthorId);
     }
 }

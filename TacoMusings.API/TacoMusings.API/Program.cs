@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddDbContext<TacoMusingsContext>(o => o.UseSqlServer(builder.Configuration["TacoMusingsConnectionString"]));
+builder.Services.AddDbContext<TacoMusingsContext>(o => o.UseSqlServer(builder.Configuration["TacoMusingsLocal"]));
 builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IContentService, ContentService>();
 builder.Services.AddScoped<ITagService, TagService>();
