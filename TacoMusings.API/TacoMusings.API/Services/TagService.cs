@@ -16,6 +16,12 @@ public class TagService : ITagService
         _context = context;
     }
 
+    public async Task<bool> TagExists(int id)
+    {
+        var tag = await _context.Tag.AnyAsync(a => a.TagId == id);
+        return tag;
+    }
+
     public async Task<IEnumerable<Tag>> GetAllTags()
     {
         var tags = await _context.Tag.ToListAsync();

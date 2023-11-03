@@ -9,6 +9,7 @@ namespace TacoMusings.API.Services.Interfaces
         Task<IEnumerable<ContentView>> GetContent();
         Task<ContentView> GetContentById(int id);
         Task<IEnumerable<ContentView>> GetContentByAuthor(int authorId);
+        Task<IEnumerable<ContentView>> GetContentByTag(int tagId);
         Task<ContentView> UpdateContent(int id, ContentCreate content);
         Task<bool> ContentExists(int id);
     }

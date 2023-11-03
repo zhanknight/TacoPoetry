@@ -2,7 +2,9 @@
 
 <div class="md:flex">
     <div class="pt-2 pb-1 px-6">
-        <div class="uppercase tracking-wide text-sm text-orange-500 font-semibold">Viewing musings by @selectedAuthorId</div>
+        <div class="uppercase tracking-wide text-sm text-orange-500 font-semibold">
+            @(selectedContent.Any() ? $"Viewing musings by {@selectedAuthorName}" : "Uh Oh")
+        </div>
     </div>
 </div>
 
@@ -28,6 +30,8 @@
     [Parameter]
     public int selectedAuthorId { get; set; }
 
+    public string selectedAuthorName { get; set; } = string.Empty;
+
     [Inject]
     public ITacoDataService TacoDataService { get; set; }
 
@@ -36,5 +40,10 @@
     protected async override Task OnInitializedAsync()
     {
         selectedContent = await TacoDataService.GetContentByAuthor(selectedAuthorId);
+
+        if (selectedContent.Any())
+        {
+            selectedAuthorName = selectedContent.FirstOrDefault().ContentAuthor;
+        }
     }
 }

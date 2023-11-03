@@ -10,5 +10,6 @@ namespace TacoMusings.API.Services.Interfaces
         Task<IEnumerable<Tag>> GetTagByContentId(int contentId);
         Task<Tag> GetTagById(int id);
         Task<Tag> UpdateTag(int id, Tag tag);
+        Task<bool> TagExists(int id);
     }
 }

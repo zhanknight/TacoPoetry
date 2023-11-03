@@ -11,11 +11,11 @@
 <div class="container rounded overflow-hidden m-2">
     <div class="container flex flex-wrap p-2 justify-around content-evenly">
 
-        @foreach (string t in allTags)
+        @foreach (Tag t in allTags)
         {
         <div>
-            <NavLink href="@($"tags/{@t}")" class="shadow-md block mt-4 lg:inline-block lg:mt-0 bg-yellow-500 hover:bg-amber-300 mr-4 mx-1 my-2 px-2 py-1 rounded">
-                @t
+            <NavLink href="@($"tags/{@t.TagId}")" class="shadow-md block mt-4 lg:inline-block lg:mt-0 bg-yellow-500 hover:bg-amber-300 mr-4 mx-1 my-2 px-2 py-1 rounded">
+                @t.TagName
             </NavLink>
         </div>
         }
@@ -28,7 +28,7 @@
     [Inject]
     public ITacoDataService TacoDataService { get; set; }
 
-    IEnumerable<string> allTags = new List<string>();
+    IEnumerable<Tag> allTags = new List<Tag>();
 
     protected async override Task OnInitializedAsync()
     {

@@ -9,10 +9,10 @@
         </p>
     </div>
     <div class="px-6 pt-4 pb-2">
-        @foreach (string t in @Content.Tags)
+        @foreach (Tag t in @Content.Tags)
             {
-            <NavLink href="@($"tags/{@t}")" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 hover:bg-amber-300">
-                @t
+            <NavLink href="@($"tags/{@t.TagId}")" class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2 hover:bg-amber-300">
+                @t.TagName
             </NavLink>
             }
     </div>
