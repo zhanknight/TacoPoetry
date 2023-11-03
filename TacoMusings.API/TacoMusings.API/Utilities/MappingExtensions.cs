@@ -59,7 +59,7 @@ public static class MappingExtensions
             ContentDate = content.ContentDate.HasValue ? content.ContentDate : DateTime.MinValue,
             ContentSource = content.ContentSource.IsNullOrEmpty() ? "Unknown" : content.ContentSource,
             ContentAuthor = content.ContentAuthorNavigation.AuthorName,
-            Tags = content.TagMap.Select(tm => tm.MappedTag.TagName).ToList()
+            Tags = content.TagMap.Select(tm => tm.MappedTag).ToList()
 
         };
     }

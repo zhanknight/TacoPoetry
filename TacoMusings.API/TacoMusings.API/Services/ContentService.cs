@@ -47,6 +47,44 @@ public class ContentService : IContentService
         return content.ToViewModel();
     }
 
+    public async Task<IEnumerable<ContentView>> GetContentByAuthor(int authorId)
+    {
+        var content = await _context.Content
+            .Where(c => c.ContentAuthor == authorId)
+            .Include(c => c.ContentAuthorNavigation)
+            .Include(c => c.ContentTypeNavigation)
+            .Include(c => c.TagMap)
+            .ToListAsync();
+
+        List<ContentView> contentViews = new List<ContentView>();
+
+        foreach (var c in content)
+        {
+            contentViews.Add(c.ToViewModel());
+        }
+
+        return contentViews;
+    }
+
+    public async Task<IEnumerable<ContentView>> GetContentByTag(int tagId)
+    {
+        var content = await _context.Content
+            .Where(c => _context.TagMap.Where(t => t.MappedContentId == c.ContentId).Any(mt => mt.MappedTagId == tagId))
+            .Include(c => c.ContentAuthorNavigation)
+            .Include(c => c.ContentTypeNavigation)
+            .Include(c => c.TagMap)
+            .ToListAsync();
+
+        List<ContentView> contentViews = new List<ContentView>();
+
+        foreach (var c in content)
+        {
+            contentViews.Add(c.ToViewModel());
+        }
+
+        return contentViews;
+    }
+
     public async Task<ContentView> CreateContent(ContentCreate content)
     {
         var newContent = content.ToEntityModel();

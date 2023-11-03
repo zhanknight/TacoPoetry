@@ -6,6 +6,8 @@ namespace TacoMusings.UI.Services.Interfaces
     {
         Task<IEnumerable<Author>> GetAllAuthors();
         Task<IEnumerable<Content>> GetAllContent();
-        Task<IEnumerable<String>> GetAllTags();
+        Task<IEnumerable<Tag>> GetAllTags();
+        Task<IEnumerable<Content>> GetContentByAuthor(int id);
+        Task<IEnumerable<Content>> GetContentByTag(int id);
     }
 }

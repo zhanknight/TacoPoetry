@@ -19,5 +19,5 @@ public partial class Content
 
     public string ContentAuthor { get; set; } = string.Empty;
 
-    public virtual ICollection<string> Tags { get; set; } = new List<string>();
+    public virtual ICollection<Tag> Tags { get; set; } = new List<Tag>();
 }

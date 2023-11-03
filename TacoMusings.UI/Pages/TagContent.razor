@@ -1,44 +1,53 @@
-﻿@page "/tags/{selectedTag}"
+﻿@page "/tags/{selectedTag:int}"
 
 <div class="md:flex">
     <div class="pt-4 pb-1 px-6">
-        <div class="uppercase tracking-wide text-sm text-orange-500 font-semibold">Viewing musings tagged with @selectedTag</div>
+        <div class="uppercase tracking-wide text-sm text-orange-500 font-semibold">
+            @(selectedContent.Any() ? $"Viewing musings tagged with {@selectedTagName}" : "Uh Oh")
+        </div>
     </div>
 </div>
-
 <div class="container flex flex-wrap p-3 mx-auto">
-   
+    @if (!selectedContent.Any())
+    {
+        <div class="text-center text-2xl text-gray-500">No musings with this tag yet!</div>
+    }
+    else
+    {
     @foreach (Content c in selectedContent)
     {
         <ContentCard Content="c" />
+    }        
     }
+
  
 </div>
 
 @code {
 
-    // pass in the author or tag
-    // also pass in whether its a tag or author
-    // also pass in a list of content
-    // ACTUALLY
-    // Just pass in a bool for tag or author
-    // and an id
-    // page itself will get the data on init
-
-    // [Parameter]
-    // [SupplyParameterFromQuery(Name = "isTag")]
-    // public bool isTag { get; set; }
-
     [Parameter]
-    public string selectedTag { get; set; }
+    public int selectedTag { get; set; }
 
-    [Parameter]
-    public List<Content>? selectedContent { get; set; } = new List<Content>();
+    public string selectedTagName { get; set; } = string.Empty;
 
-    Content testContent = new Content { ContentAuthor = "Evan Knight", ContentBody = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.", ContentTitle = "Lor them!", Tags = new List<string> { "hello", "world", "taco" } };
+    [Inject]
+    public ITacoDataService TacoDataService { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    public IEnumerable<Content> selectedContent { get; set; } = new List<Content>();
+
+    protected async override Task OnInitializedAsync()
     {
-        selectedContent.Add(testContent);
+        selectedContent = await TacoDataService.GetContentByTag(selectedTag);
+
+        if (selectedContent.Any())
+        {
+            selectedTagName = selectedContent.FirstOrDefault().Tags.Where(t => t.TagId == selectedTag).FirstOrDefault().TagName;
+        }
     }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await OnInitializedAsync();
+    }
+
 }
