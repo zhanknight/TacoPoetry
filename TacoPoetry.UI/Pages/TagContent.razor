@@ -3,14 +3,14 @@
 <div class="md:flex">
     <div class="pt-4 pb-1 px-6">
         <div class="uppercase tracking-wide text-sm text-orange-500 font-semibold">
-            @(selectedContent.Any() ? $"Viewing musings tagged with {@selectedTagName}" : "Uh Oh")
+            @(selectedContent.Any() ? $"Viewing poems tagged with {@selectedTagName}" : "Uh Oh")
         </div>
     </div>
 </div>
 <div class="container flex flex-wrap p-3 mx-auto">
     @if (!selectedContent.Any())
     {
-        <div class="text-center text-2xl text-gray-500">No musings with this tag yet!</div>
+        <div class="text-center text-2xl text-gray-500">No poems with this tag yet!</div>
     }
     else
     {

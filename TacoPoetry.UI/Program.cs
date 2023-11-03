@@ -1,5 +1,5 @@
-using TacoMusings.UI.Services;
-using TacoMusings.UI.Services.Interfaces;
+using TacoPoetry.UI.Services;
+using TacoPoetry.UI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
@@ -7,7 +7,7 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddHttpClient<ITacoDataService, TacoDataService>(client =>
 {
-    client.BaseAddress = new Uri(builder.Configuration["TacoMusingsAPI"]);
+    client.BaseAddress = new Uri(builder.Configuration["TacoPoetryAPI"]);
 });
 
 var app = builder.Build();

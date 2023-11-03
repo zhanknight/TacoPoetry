@@ -1,6 +1,6 @@
-﻿using TacoMusings.UI.Models;
+﻿using TacoPoetry.UI.Models;
 
-namespace TacoMusings.UI.Services.Interfaces
+namespace TacoPoetry.UI.Services.Interfaces
 {
     public interface ITacoDataService
     {

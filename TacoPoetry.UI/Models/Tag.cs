@@ -1,4 +1,4 @@
-﻿namespace TacoMusings.UI.Models;
+﻿namespace TacoPoetry.UI.Models;
 
 public partial class Tag
 {

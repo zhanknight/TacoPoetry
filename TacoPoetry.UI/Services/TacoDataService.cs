@@ -1,8 +1,8 @@
 ﻿using System.Text.Json;
-using TacoMusings.UI.Models;
-using TacoMusings.UI.Services.Interfaces;
+using TacoPoetry.UI.Models;
+using TacoPoetry.UI.Services.Interfaces;
 
-namespace TacoMusings.UI.Services;
+namespace TacoPoetry.UI.Services;
 
 public class TacoDataService : ITacoDataService
 {
