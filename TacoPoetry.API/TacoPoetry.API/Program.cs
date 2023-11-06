@@ -16,9 +16,13 @@ builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IContentService, ContentService>();
 builder.Services.AddScoped<ITagService, TagService>();
 
+builder.Services.AddHealthChecks();
+
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.MapHealthChecks("/healthytaco");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
