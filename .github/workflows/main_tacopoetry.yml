@@ -14,7 +14,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        working-directory: ./TacoPoetry.API
+        working-directory: ./TacoPoetry.UI
 
     steps:
       - uses: actions/checkout@v4
