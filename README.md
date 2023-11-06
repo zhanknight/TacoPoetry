@@ -1,2 +1,2 @@
 # TacoPoetry
-A .NET Blazor WebAssembly demo and practice app (feat. API, Azure, Auth, SQL.. eventually!)
+A .NET Blazor demo and practice app (feat. API, SQL, Azure, Auth, and more.. eventually!)
