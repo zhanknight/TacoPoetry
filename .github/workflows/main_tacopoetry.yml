@@ -6,12 +6,15 @@ name: Build and deploy ASP.Net Core app to Azure Web App - TacoPoetry
 on:
   push:
     branches:
-      - main
+      - initial_deployment
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: ./TacoPoetry.API
 
     steps:
       - uses: actions/checkout@v4
