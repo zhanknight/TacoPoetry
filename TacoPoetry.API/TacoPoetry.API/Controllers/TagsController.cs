@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using TacoPoetry.API.Models;
 using TacoPoetry.API.Services.Interfaces;
 
@@ -6,6 +7,8 @@ namespace TacoPoetry.API.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[EnableRateLimiting("slidingWindow")]
+
 public class TagsController : ControllerBase
 {
     private readonly ILogger<TagsController> _logger;
