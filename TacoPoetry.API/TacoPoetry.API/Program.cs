@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using System.Threading.RateLimiting;
 using TacoPoetry.API.Contexts;
 using TacoPoetry.API.Services;
 using TacoPoetry.API.Services.Interfaces;
@@ -20,7 +23,35 @@ builder.Services.AddHealthChecks();
 
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddRateLimiter(opt =>
+{
+    opt.OnRejected = (context, _) =>
+        {
+        if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
+            {
+                context.HttpContext.Response.Headers.RetryAfter =
+                    ((int)retryAfter.TotalSeconds).ToString(NumberFormatInfo.InvariantInfo);
+            }
+
+        context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+        context.HttpContext.Response.WriteAsync("Too many requests. Please try again later.");
+
+        return new ValueTask();
+        };
+
+    opt.AddSlidingWindowLimiter(policyName: "slidingWindow", options =>
+        {
+        options.PermitLimit = 4;
+        options.Window = TimeSpan.FromSeconds(10);
+        options.SegmentsPerWindow = 2;
+        options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+        options.QueueLimit = 3;
+        });
+});
+
 var app = builder.Build();
+
+app.UseRateLimiter();
 
 app.MapHealthChecks("/healthytaco");
 
