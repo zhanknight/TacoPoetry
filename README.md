@@ -1,3 +1,6 @@
+![Deploy API](https://github.com/zhanknight/TacoPoetry/actions/workflows/main_tacopoetryapi.yml/badge.svg)
+![Deploy API](https://github.com/zhanknight/TacoPoetry/actions/workflows/main_tacopoetry.yml/badge.svg)
+
 # TacoPoetry
 A .NET Blazor demo and practice app (feat. API, SQL, Azure, Auth, and more.. eventually!)
 
