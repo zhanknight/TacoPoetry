@@ -1,4 +1,11 @@
 ﻿@page "/authors/{selectedAuthorId:int}"
+@if (selectedContent == null)
+{
+    <div class="text-center text-2xl text-gray-500">LOADING</div>
+}
+else
+{
+    
 
 <div class="md:flex">
     <div class="pt-2 pb-1 px-6">
@@ -10,7 +17,9 @@
 
 <div class="container flex flex-wrap p-3 mx-auto">
 
-    @if(!selectedContent.Any())
+
+
+  @if(!selectedContent.Any())
     {
         <div class="text-center text-2xl text-gray-500">No poems by this author yet!</div>
     }
@@ -20,11 +29,15 @@
         {
             <ContentCard Content="c" />
         }       
-    }
+    }      
+
+
+    
+
 
 
 </div>
-
+}
 @code {
 
     [Parameter]
@@ -35,7 +48,7 @@
     [Inject]
     public ITacoDataService TacoDataService { get; set; }
 
-    public IEnumerable<Content> selectedContent { get; set; } = new List<Content>();
+    public IEnumerable<Content>? selectedContent { get; set; } = null;
 
     protected async override Task OnInitializedAsync()
     {
