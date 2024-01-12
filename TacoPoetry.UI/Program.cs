@@ -2,7 +2,9 @@ using TacoPoetry.UI.Services;
 using TacoPoetry.UI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddRazorPages();
+
 builder.Services.AddServerSideBlazor();
 
 builder.Services.AddHttpClient<ITacoDataService, TacoDataService>(client =>
@@ -25,6 +27,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.MapBlazorHub();
+
 app.MapFallbackToPage("/_Host");
 
 app.Run();

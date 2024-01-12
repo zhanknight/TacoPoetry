@@ -41,11 +41,11 @@ builder.Services.AddRateLimiter(opt =>
 
     opt.AddSlidingWindowLimiter(policyName: "slidingWindow", options =>
         {
-        options.PermitLimit = 4;
-        options.Window = TimeSpan.FromSeconds(10);
+        options.PermitLimit = 5;
+        options.Window = TimeSpan.FromSeconds(8);
         options.SegmentsPerWindow = 2;
         options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-        options.QueueLimit = 3;
+        options.QueueLimit = 4;
         });
 });
 

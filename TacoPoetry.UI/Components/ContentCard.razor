@@ -1,8 +1,13 @@
-﻿<div class=" rounded overflow-hidden shadow-md m-1">
+﻿<div class="w-full rounded overflow-hidden shadow-md m-1 mx-auto bg-slate-50">
    
     <div class="px-6 pb-4 pt-2">
         <div class="font-bold text-xl mb-2">
             @Content.ContentTitle
+            <p class="text-gray-500 text-base">
+                by <NavLink href="@($"authors/{Content.ContentAuthorId}")" class="text-yellow-500 hover:text-amber-300">
+                    @Content.ContentAuthor
+                </NavLink>
+            </p>
         </div>
         <p class="text-gray-700 text-base">
             @Content.ContentBody
@@ -25,3 +30,5 @@
     public Content? Content { get; set; }
 
 }
+
+
