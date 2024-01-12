@@ -1,12 +1,11 @@
 ﻿@page "/authors/{selectedAuthorId:int}"
+
 @if (selectedContent == null)
 {
-    <div class="text-center text-2xl text-gray-500">LOADING</div>
+    <div class="text-center text-2xl text-gray-500">Gathering poems..</div>
 }
 else
 {
-    
-
 <div class="md:flex">
     <div class="pt-2 pb-1 px-6">
         <div class="uppercase tracking-wide text-sm text-orange-500 font-semibold">
@@ -16,9 +15,6 @@ else
 </div>
 
 <div class="container flex flex-wrap p-3 mx-auto">
-
-
-
   @if(!selectedContent.Any())
     {
         <div class="text-center text-2xl text-gray-500">No poems by this author yet!</div>
@@ -30,12 +26,6 @@ else
             <ContentCard Content="c" />
         }       
     }      
-
-
-    
-
-
-
 </div>
 }
 @code {

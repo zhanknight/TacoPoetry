@@ -1,5 +1,11 @@
 ﻿@page "/tags/{selectedTag:int}"
 
+@if (selectedContent == null)
+{
+    <div class="text-center text-2xl text-gray-500">Gathering poems..</div>
+}
+else
+{
 <div class="md:flex">
     <div class="pt-4 pb-1 px-6">
         <div class="uppercase tracking-wide text-sm text-orange-500 font-semibold">
@@ -7,6 +13,7 @@
         </div>
     </div>
 </div>
+
 <div class="container flex flex-wrap p-3 mx-auto">
     @if (!selectedContent.Any())
     {
@@ -14,14 +21,13 @@
     }
     else
     {
-    @foreach (Content c in selectedContent)
-    {
-        <ContentCard Content="c" />
-    }        
+        @foreach (Content c in selectedContent)
+        {
+            <ContentCard Content="c" />
+        }        
     }
-
- 
 </div>
+}
 
 @code {
 
@@ -33,7 +39,7 @@
     [Inject]
     public ITacoDataService TacoDataService { get; set; }
 
-    public IEnumerable<Content> selectedContent { get; set; } = new List<Content>();
+    public IEnumerable<Content>? selectedContent { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
@@ -47,6 +53,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
+        selectedContent = null;
         await OnInitializedAsync();
     }
 
