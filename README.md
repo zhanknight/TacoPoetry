@@ -2,7 +2,7 @@
 ![Deploy API](https://github.com/zhanknight/TacoPoetry/actions/workflows/main_tacopoetry.yml/badge.svg)
 
 # TacoPoetry
-A tacho themed .NET Blazor demo app (feat. Web API, SQL, Azure, Auth, and more).
+A taco themed .NET Blazor demo app (feat. Web API, SQL, Azure, Auth, and more).
 
 ## What is this?
 Taco Poetry is a website with poems about tacos. All of the content, including the poems AND the authors, are fake and were created by an LLM. 
