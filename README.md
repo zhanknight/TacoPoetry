@@ -13,4 +13,4 @@ The content is all taco poetry. The poems are categorized by poem type, and ther
 - Taco Poetry uses Blazor Server communicating over SignalR for the front end. 
 - It uses Tailwind (via the CDN rather than real integration. This is bad practice, but we're not in production here).
 - It has a .NET Web API backend that communicates with a SQL Server database instance in Azure.
-- Everything is deployed in an Azure App Service. 
+- Everything is deployed in an Azure App Service (Free and cheap tiers, may take a minute to wake up). 
